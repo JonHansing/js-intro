@@ -1,7 +1,34 @@
-function playOneRound() {
-    let playerAns = prompt("Enter 'Rock', 'Paper', or 'Scissors'.", "Choice")
-    playerAns = playerAns.toLowerCase();
-    let computerAns = getComputerChoice();
+function playGame(numRounds) {
+    let playerScore = 0;
+    let computerScore = 0;
+    let ties = 0;
+
+    for (let i = 0; i < numRounds; i++) {
+        console.log("Round " + (i+1))
+        let winner = playRound(getPlayerChoice(), getComputerChoice());
+
+        if (winner == "Player") {
+            playerScore++;
+        } else if (winner == "Computer") {
+            computerScore++;
+        } else {
+            ties++;
+        }
+    }
+
+    console.log("Overall score. Player: " + playerScore + ". Computer: " + computerScore + ". Ties: " + ties + ".");
+
+    if (playerScore > computerScore) {
+        return("You are the overall winner!")
+    } else if (computerScore > playerScore) {
+        return("Computer is the overall winner.")
+    } else {
+        return("You tied.")
+    }
+
+}
+
+function playRound(playerAns, computerAns) {
     let winner;
 
     console.log("Computer chose " + computerAns + ". You chose " + playerAns + ".")
@@ -9,13 +36,23 @@ function playOneRound() {
         playerAns == "paper" && computerAns == "rock" ||
         playerAns == "scissors" && computerAns == "paper") {
         
-        return("You win!");
+        console.log("You win!");
+        winner = "Player";
 
     } else if (playerAns == computerAns) {
-        return("It's a tie.");
+        console.log("It's a tie.");
+        winner = "Tie";
     } else {
-        return("Computer wins.");
+        console.log("Computer wins.");
+        winner = "Computer";
     }
+    return winner;
+}
+
+function getPlayerChoice() {
+    let playerAns = prompt("Enter 'Rock', 'Paper', or 'Scissors'.", "Choice")
+    playerAns = playerAns.toLowerCase();
+    return playerAns;
 }
 
 function getComputerChoice() {
